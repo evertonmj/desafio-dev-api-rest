@@ -1,0 +1,229 @@
+{
+	"info": {
+		"_postman_id": "0ee6e32a-ebf4-4a5b-8cfd-736f17f04733",
+		"name": "Processo-DOCK",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "LOCAL pessoa/criar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"nome\": \"Everton Mendonça\",\n\t\"cpf\": \"00000000000\",\n\t\"dataNascimento\": \"22/09/1987\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/pessoa/criar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"pessoa",
+						"criar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL conta/depositar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idConta\": 2,\n\t\"valor\": 0.22\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/conta/depositar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conta",
+						"depositar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL conta/criar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idPessoa\": 1,\n\t\"limiteSaqueDiario\": 1560.55,\n\t\"tipoConta\": \"CORRENTE\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/conta/criar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conta",
+						"criar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL conta/saldo",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/conta/saldo/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conta",
+						"saldo",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL conta/bloquear",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/conta/bloquear/2",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conta",
+						"bloquear",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL conta/sacar",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"idConta\": 3,\n\t\"valor\": 10\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/conta/sacar",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conta",
+						"sacar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL conta/extrato TOTAL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/conta/extrato?idConta=3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conta",
+						"extrato"
+					],
+					"query": [
+						{
+							"key": "idConta",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LOCAL conta/extrato PERIODO",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/conta/extrato?idConta=3&dataInicial=01/01/2021&dataFinal=14/02/2021",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"conta",
+						"extrato"
+					],
+					"query": [
+						{
+							"key": "idConta",
+							"value": "3"
+						},
+						{
+							"key": "dataInicial",
+							"value": "01/01/2021"
+						},
+						{
+							"key": "dataFinal",
+							"value": "14/02/2021"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

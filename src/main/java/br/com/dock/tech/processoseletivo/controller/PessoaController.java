@@ -2,6 +2,8 @@ package br.com.dock.tech.processoseletivo.controller;
 
 import java.text.ParseException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,15 +16,19 @@ import br.com.dock.tech.processoseletivo.models.request.PessoaRequest;
 import br.com.dock.tech.processoseletivo.models.response.Response;
 import br.com.dock.tech.processoseletivo.repository.PessoaRepository;
 import br.com.dock.tech.processoseletivo.utils.Utils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Controller
 @RequestMapping(path="/pessoa")
+@Tag(name = "API para gerenciamento de pessoas")
 public class PessoaController {
 	@Autowired
 	PessoaRepository pessoaRepository;
 	
+	@Operation(summary = "Cria um novo registro de pessoa")
 	@PostMapping(path="/criar")
-	public @ResponseBody Response<Pessoa> criarPessoa(@RequestBody PessoaRequest requestBody) {
+	public @ResponseBody Response<Pessoa> criarPessoa(@Valid @RequestBody PessoaRequest requestBody) {
 		Pessoa pessoa = new Pessoa();
 		Response<Pessoa> response = new Response<Pessoa>();
 		try {

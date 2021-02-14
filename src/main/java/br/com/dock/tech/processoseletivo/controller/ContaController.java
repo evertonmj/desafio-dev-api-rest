@@ -2,12 +2,15 @@ package br.com.dock.tech.processoseletivo.controller;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -25,9 +28,13 @@ import br.com.dock.tech.processoseletivo.models.request.SaqueRequest;
 import br.com.dock.tech.processoseletivo.models.response.Response;
 import br.com.dock.tech.processoseletivo.repository.ContaRepository;
 import br.com.dock.tech.processoseletivo.repository.TransacaoRepository;
+import br.com.dock.tech.processoseletivo.utils.Utils;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Controller
 @RequestMapping(path="/conta")
+@Tag(name = "API para gerenciamento de contas")
 public class ContaController {
 	
 	@Autowired
@@ -36,6 +43,7 @@ public class ContaController {
 	@Autowired
 	private TransacaoRepository transacaoRepository;
 	
+	@Operation(summary = "Cria uma nova conta")
 	@PostMapping(path="/criar")
 	public @ResponseBody Response<Conta> criarConta(@RequestBody ContaRequest requestBody) {
 		Conta conta = new Conta();
@@ -55,6 +63,7 @@ public class ContaController {
 		return response;
 	}
 	
+	@Operation(summary = "Faz um deposito em uma conta")
 	@PostMapping(path="/depositar")
 	public @ResponseBody Response<Transacao> depositarValor(@RequestBody DepositoRequest requestBody) {
 		Optional<Conta> contaRep = contaRepository.findById(requestBody.getIdConta());
@@ -92,6 +101,7 @@ public class ContaController {
 		return response;
 	}
 	
+	@Operation(summary = "Obtem o saldo de uma conta")
 	@GetMapping(path="/saldo/{idConta}")
 	public @ResponseBody Response<BigDecimal> obterSaldo(@PathVariable Integer idConta) {
 		Conta conta = new Conta();
@@ -115,6 +125,7 @@ public class ContaController {
 		return response;
 	}
 	
+	@Operation(summary = "Bloqueia uma conta")
 	@PostMapping(path="/bloquear/{idConta}")
 	public @ResponseBody Response<Conta> bloquearConta(@PathVariable Integer idConta) {
 		Conta conta = new Conta();
@@ -137,6 +148,7 @@ public class ContaController {
 		return response;
 	}
 	
+	@Operation(summary = "Faz um saque em uma conta")
 	@PostMapping(path="/sacar")
 	public @ResponseBody Response<Transacao> sacarValor(@RequestBody SaqueRequest requestBody) {
 		Optional<Conta> contaRep = contaRepository.findById(requestBody.getIdConta());
@@ -206,10 +218,28 @@ public class ContaController {
 		return response;
 	}
 	
+	@Operation(summary = "Retorna o extrato de transacoes de uma conta")
 	@GetMapping(path="/extrato")
-	public @ResponseBody Response<List<Transacao>> bloquearConta(@RequestParam String dataInicial, String dataFinal) {
+	public @ResponseBody Response<List<Transacao>> extratoConta(@RequestParam Integer idConta, @RequestParam(required = false) String dataInicial, @RequestParam(required = false) String dataFinal) {
 		Conta conta = new Conta();
 		Response<List<Transacao>> response = new Response<List<Transacao>>();
+		
+		List<Transacao> transacoes = new ArrayList<Transacao>();
+		if (!ObjectUtils.isEmpty(dataInicial) && !ObjectUtils.isEmpty(dataFinal)) {
+			try {
+				transacoes = transacaoRepository.findByIdConta(idConta, Utils.converterStringData(dataInicial) , Utils.converterStringData(dataFinal));
+			} catch (ParseException e) {
+				e.printStackTrace();
+				response.setMensagem("Erro ao converter datas");
+				return response;
+			}
+		} else {
+			transacoes = transacaoRepository.findByIdConta(idConta);
+		}
+		
+		response.setMensagem("Transacoes da conta");
+		response.setPayload(transacoes);
+		
 		return response;
 	}
 }
