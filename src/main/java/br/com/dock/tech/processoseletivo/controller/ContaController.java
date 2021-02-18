@@ -140,7 +140,7 @@ public class ContaController {
 		conta = contaRep.get();
 		conta.setFlagAtivo(false);
 		
-		contaRepository.save(conta);
+		conta = contaRepository.save(conta);
 		
 		response.setMensagem("Conta bloqueada com sucesso");
 		response.setPayload(conta);
@@ -202,7 +202,7 @@ public class ContaController {
 		}
 		
 		conta.setSaldo(saldoAtual.subtract(requestBody.getValor()));
-		contaRepository.save(conta);
+		conta = contaRepository.save(conta);
 		
 		//salva deposito na tabela de transacoes
 		Transacao transacao = new Transacao();
@@ -210,7 +210,7 @@ public class ContaController {
 		transacao.setDataTransacao(new Date(Calendar.getInstance().getTime().getTime()));
 		transacao.setValor(requestBody.getValor());
 		transacao.setTipoTransacao(TipoTransacao.SAQUE.getTipoTransacao());
-		transacaoRepository.save(transacao);
+		transacao = transacaoRepository.save(transacao);
 		
 		response.setMensagem("Saque efetuado com sucesso");
 		response.setPayload(transacao);

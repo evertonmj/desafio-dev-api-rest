@@ -1,27 +1,32 @@
-package com.dock.tech.processoseletivo.controller;
+package com.dock.tech.processoseletivo;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import org.junit.Test;
-import org.mockito.InjectMocks;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.DirtiesContext.ClassMode;
 
+import br.com.dock.tech.processoseletivo.ProcessoSeletivoApplication;
 import br.com.dock.tech.processoseletivo.controller.PessoaController;
 import br.com.dock.tech.processoseletivo.models.entity.Pessoa;
 import br.com.dock.tech.processoseletivo.models.request.PessoaRequest;
 import br.com.dock.tech.processoseletivo.models.response.Response;
-import br.com.dock.tech.processoseletivo.repository.PessoaRepository;
 
-@SpringBootTest(classes=PessoaControllerTest.class)
+@SpringBootTest(classes=ProcessoSeletivoApplication.class)
+@AutoConfigureTestDatabase(replace = Replace.ANY)
 public class PessoaControllerTest {
 	
+	public PessoaControllerTest() {
+		super();
+	}
+
 	@Autowired
 	PessoaController pessoaController;
-	
-	@InjectMocks
-	PessoaRepository pessoaRepository;
 	
 	@Test
 	public void testarCriacaoPessoa() {
