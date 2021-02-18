@@ -35,7 +35,7 @@ public class PessoaController {
 			pessoa.setCpf(requestBody.getCpf());
 			pessoa.setNome(requestBody.getNome());
 			pessoa.setDataNascimento(Utils.converterStringData(requestBody.getDataNascimento()));
-			pessoaRepository.save(pessoa);
+			pessoa = pessoaRepository.save(pessoa);
 			response.setMensagem("Pessoa criada com sucesso!");
 			response.setPayload(pessoa);
 		} catch (ParseException e) {

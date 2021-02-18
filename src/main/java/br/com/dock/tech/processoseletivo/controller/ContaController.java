@@ -56,7 +56,7 @@ public class ContaController {
 		conta.setFlagAtivo(true);
 		conta.setSaldo(BigDecimal.ZERO);
 		
-		contaRepository.save(conta);
+		conta = contaRepository.save(conta);
 		response.setMensagem("Conta criada com sucesso");
 		response.setPayload(conta);
 		
