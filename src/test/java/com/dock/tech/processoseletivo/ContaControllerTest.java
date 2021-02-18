@@ -8,11 +8,9 @@ import java.util.List;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import br.com.dock.tech.processoseletivo.ProcessoSeletivoApplication;
@@ -27,8 +25,6 @@ import br.com.dock.tech.processoseletivo.models.request.DepositoRequest;
 import br.com.dock.tech.processoseletivo.models.request.PessoaRequest;
 import br.com.dock.tech.processoseletivo.models.request.SaqueRequest;
 import br.com.dock.tech.processoseletivo.models.response.Response;
-import br.com.dock.tech.processoseletivo.repository.ContaRepository;
-import br.com.dock.tech.processoseletivo.repository.TransacaoRepository;
 
 @SpringBootTest(classes=ProcessoSeletivoApplication.class)
 @AutoConfigureTestDatabase(replace = Replace.ANY)
@@ -40,9 +36,6 @@ public class ContaControllerTest {
 	@Autowired
 	ContaController contaController;
 	
-	private Pessoa pessoa = new Pessoa();
-	private Conta conta = new Conta();
-	
 	@Before
 	public void criarPessoa() {
 		PessoaRequest pessoaRequest = new PessoaRequest();
@@ -51,7 +44,6 @@ public class ContaControllerTest {
 		pessoaRequest.setNome("Joao Test");
 		
 		Response<Pessoa> response = pessoaController.criarPessoa(pessoaRequest);
-		this.pessoa = response.getPayload();
 	}
 	
 	@Test
@@ -63,7 +55,6 @@ public class ContaControllerTest {
 		Response<Conta> response = contaController.criarConta(req);
 		
 		assertNotNull(response.getPayload());
-		this.conta = response.getPayload();
 	}
 	
 	@Test
